@@ -26,14 +26,7 @@ jobs:
           mkdir report
           npx serve . -p 5000 &
           sleep 20 # Increased sleep duration
-          pa11y http://localhost:5000/index.html --reporter html --chrome-launcher-flags="--no-sandbox" > report/pa11y-report.html || true # Continue even if Pa11y reports issues
-
-      - name: Check for Accessibility Errors
-        run: |
-          if grep -q "Pa11y has detected accessibility issues" report/pa11y-report.html; then
-            echo "Accessibility issues found! See report/pa11y-report.html for details."
-            exit 1
-          fi
+          pa11y --reporter html --config config.json > report/pa11y-report.html
 
       - name: Upload Accessibility Report
         uses: actions/upload-artifact@v4
