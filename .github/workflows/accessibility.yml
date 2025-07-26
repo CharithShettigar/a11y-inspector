@@ -1,0 +1,36 @@
+name: Accessibility Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pa11y-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Pa11y
+        run: npm install -g pa11y
+
+      - name: Run Accessibility Check
+        run: |
+          mkdir report
+          npx serve . -p 5000 &  # Start local server
+          sleep 10
+          pa11y http://localhost:5000/index.html --reporter html > report/pa11y-report.html
+
+      - name: Upload Accessibility Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: pa11y-accessibility-report
+          path: report/pa11y-report.html
+
