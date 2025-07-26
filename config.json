@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox"
+      ]
+    },
+    "standard": "WCAG2AA"
+  },
+  "urls": [
+    "http://localhost:5000/index.html"
+  ]
+}
